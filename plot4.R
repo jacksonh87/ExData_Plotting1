@@ -17,28 +17,38 @@ plot_data$datetime <- strptime(plot_data$rawDateTime, "%Y-%m-%d %H:%M:%S")
 
 ##Convert the relevant data from character to numeric
 plot_data$Global_active_power <- as.numeric(plot_data$Global_active_power)
+plot_data$Global_reactive_power <- as.numeric(plot_data$Global_reactive_power)
 plot_data$Sub_metering_1 <- as.numeric(plot_data$Sub_metering_1)
 plot_data$Sub_metering_2 <- as.numeric(plot_data$Sub_metering_2)
 plot_data$Sub_metering_3 <- as.numeric(plot_data$Sub_metering_3)
+plot_data$Voltage <- as.numeric(plot_data$Voltage)
 
-##Plot a line graph and write it to a PNG file 
-
-#Set up file and initialise plot with no lines
+#Set up file and parameters
 output_URL <- paste("~/Coursera/Data Science JHU/004 Exploratory Data Analysis/",
-                    "Week 1 Course Project/ExData_Plotting1/plot3.PNG", sep = "")
+                    "Week 1 Course Project/ExData_Plotting1/plot4.PNG", sep = "")
 png(output_URL, width = 480, height = 480, units = "px") 
-with(plot_data, plot(datetime, Sub_metering_1, type = "n", lty = 1, lwd = 1,
-       ylab = "Energy sub metering", xlab = ""))
+par(mfrow = c(2,2))
 
-#Draw lines on the plot
+#Draw top left plot
+with(plot_data, plot(datetime, Global_active_power, type="l", ylab = 
+                "Global Active Power (kilowatts)", xlab = ""))
+
+#Draw top right plot
+with(plot_data, plot(datetime, Voltage, type="l", ylab = 
+                       "Voltage", xlab = "datetime"))
+
+#Draw bottom left plot
+with(plot_data, plot(datetime, Sub_metering_1, type = "n", lty = 1, lwd = 1,
+                     ylab = "Energy sub metering", xlab = ""))
 with(plot_data, lines(datetime, Sub_metering_1, lty = 1, lwd = 1))
 with(plot_data, lines(datetime, Sub_metering_2, lty = 1, lwd = 1, col = "red"))
 with(plot_data, lines(datetime, Sub_metering_3, lty = 1, lwd = 1, col = "blue"))
-
-#Add the legend to the plot
 legend("topright", legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),
-       lty = 1, col = c("black","red","blue"))
- 
+       lty = 1, col = c("black","red","blue"), bty = "n")
+
+#Draw bottom right plot
+with(plot_data, plot(datetime, Global_reactive_power, type="l", lwd = 0.7))
+
 dev.off()
 
 
