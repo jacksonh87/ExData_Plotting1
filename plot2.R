@@ -18,10 +18,13 @@ plot_data$datetime <- strptime(plot_data$rawDateTime, "%Y-%m-%d %H:%M:%S")
 ##Convert the power data from character to numeric
 plot_data$Global_active_power <- as.numeric(plot_data$Global_active_power)
 
-##Create a histogram and write it to a PNG file 
+##Plot a line graph and write it to a PNG file 
 output_URL <- paste("~/Coursera/Data Science JHU/004 Exploratory Data Analysis/",
-                    "Week 1 Course Project/ExData_Plotting1/plot1.PNG", sep = "")
+                    "Week 1 Course Project/ExData_Plotting1/plot2.PNG", sep = "")
 png(output_URL, width = 480, height = 480, units = "px") 
-hist(plot_data$Global_active_power, col = "red", main = "Global Active Power", 
-     xlab = "Global Active Power (kilowatts)")
+with(plot_data, plot(datetime, Global_active_power, type="l", 
+                     ylab = "Global Active Power (kilowatts)",
+                     xlab = ""))
 dev.off()
+
+
